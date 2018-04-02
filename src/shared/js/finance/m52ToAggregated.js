@@ -413,7 +413,13 @@ export const rules = Object.freeze({
                 !(art === '6245' && fonction === '568') &&
                 !(art === '6245' && fonction === '52') &&
                 !(art === '65111' && fonction === '51') &&
-                !((art === '65113' || art === '6568') && fonction.startsWith('53'));
+                (
+                    !(
+                        fonction.startsWith('53') &&
+                        (art === '65113' || art === '6568') 
+                    ) ||
+                    (art === '6568' && fonction === '538')
+                );
         }
     },
     'DF-1-8': {
@@ -893,7 +899,7 @@ export const rules = Object.freeze({
                     (fonction === '52' && ['23151', '2315'].includes(article)) ||
                     (fonction === '821' && article === '1322')
                 ) &&
-                !( fonction === '621' && ['2111', '231318'].includes(article) )
+                !( fonction === '621' && ['2111', '231318', '204182'].includes(article) )
         }
     },
     'DI-1-3': {
@@ -914,24 +920,19 @@ export const rules = Object.freeze({
                         ) &&
                         !['221', '621', '738', '50'].includes(fonction)
                     ) ||
-                    (
-                        (
-                            article === '23151' ||
-                            article === '2315'
-                        ) &&
-                        fonction === '52'
-                    ) ||
+                    ( fonction === '52' && article === '2315' ) ||
                     (
                         (
                             article === '2111' ||
                             article === '231318'
                         ) &&
                         fonction === '621'
-                    ) ||
-                    ( article === '2188' && fonction === '41' )
+                    )
                 ) &&
                 !( article === '21313' && fonction === '40' ) &&
                 !( article === '1322' && fonction === '821' ) &&
+                !( article === '23151' && fonction === '52' ) && 
+                !( article === '2188' && fonction === '41' ) &&
                 !(
                     (
                         article === '2031' ||
@@ -1032,9 +1033,9 @@ export const rules = Object.freeze({
                 [
                     "204112", "204113", "204122", "204131", "204132",
                     "204151", "204152", "204162", "2041721", "2041722",
-                    "2041782", "204181", "204182", "204182", "20421",
+                    "2041782", "204181", "204182",
                     "20422", "20431", '2761', '261', '20421', '204183',
-                    '204113', '1321','2748','1328','13278'
+                    '204113', '1321', '2748', '1328', '13278'
                 ].includes(article) &&
                 fonction !== '72' &&
                 !(article === '204152' && fonction === '93') &&

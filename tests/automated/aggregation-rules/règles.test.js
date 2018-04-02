@@ -307,6 +307,29 @@ test("RF-9-7 : ne contient pas R 567 75342 et R 567 75343", () => {
  * 
  */
 
+test("DF-1-7-2 : contient D 538 6568", () => {
+    const AGGREGATED_ROW_ID = 'DF-1-7-2';
+
+    const m52Rows = [
+        new LigneBudgetRecord({
+            'CodRD': 'D',
+            'FI': 'F',
+            'Fonction': '538',
+            'Nature': '6568',
+            'Chapitre': '65',
+            'MtReal': 1
+        })
+    ];
+
+    const instruction = new DocumentBudgetaire({ rows: new ImmutableSet(m52Rows) });
+
+    const aggVision = m52ToAggregated(instruction);
+
+    const aggDF172 = aggVision.find(row => row.id === AGGREGATED_ROW_ID);
+
+    expect(aggDF172.M52Rows.first()).toBe(m52Rows[0]);
+});
+
 test("DF-3-6 : ne contient pas d'article commençant par 657 des fonctions 4, 5 et 8", () => {
     const AMOUNT = 38;
     const AGGREGATED_ROW_ID = 'DF-3-6';
@@ -641,3 +664,83 @@ test("D 51 65111 n'est pas dans DF-1-7-2", () => {
     const aggDF172 = aggVision.find(row => row.id === 'DF-1-7-2');
     expect(aggDF172.M52Rows.includes(m52Rows[0])).toBe(false);
 });
+
+
+/**
+ * DI - Dépenses d'Investissement
+ */
+
+test("DI-2-4 contient D 621 204182, mais pas DI-1-2", () => {
+
+    const m52Rows = [
+        new LigneBudgetRecord({
+            'CodRD': 'D',
+            'FI': 'I',
+            'Fonction': '621',
+            'Nature': '204182',
+            'Chapitre': '204',
+            'MtReal': 1
+        })
+    ];
+
+    const instruction = new DocumentBudgetaire({ rows: new ImmutableSet(m52Rows) });
+
+    const aggVision = m52ToAggregated(instruction);
+
+    const aggDI24 = aggVision.find(row => row.id === 'DI-2-4');
+    const aggDI12 = aggVision.find(row => row.id === 'DI-1-2');
+
+    expect(aggDI24.M52Rows.first()).toBe(m52Rows[0]);
+    expect(aggDI12.M52Rows.size).toBe(0);
+});
+
+
+test("DI-1-2 contient D 52 23151, mais pas DI-1-3", () => {
+
+    const m52Rows = [
+        new LigneBudgetRecord({
+            'CodRD': 'D',
+            'FI': 'I',
+            'Fonction': '52',
+            'Nature': '23151',
+            'Chapitre': '23',
+            'MtReal': 1
+        })
+    ];
+
+    const instruction = new DocumentBudgetaire({ rows: new ImmutableSet(m52Rows) });
+
+    const aggVision = m52ToAggregated(instruction);
+
+    const aggDI12 = aggVision.find(row => row.id === 'DI-1-2');
+    const aggDI13 = aggVision.find(row => row.id === 'DI-1-3');
+
+    expect(aggDI12.M52Rows.first()).toBe(m52Rows[0]);
+    expect(aggDI13.M52Rows.size).toBe(0);
+});
+
+
+test("DI-1-5 contient D 41 2188, mais pas DI-1-3", () => {
+
+    const m52Rows = [
+        new LigneBudgetRecord({
+            'CodRD': 'D',
+            'FI': 'I',
+            'Fonction': '41',
+            'Nature': '2188',
+            'Chapitre': '21',
+            'MtReal': 1
+        })
+    ];
+
+    const instruction = new DocumentBudgetaire({ rows: new ImmutableSet(m52Rows) });
+
+    const aggVision = m52ToAggregated(instruction);
+
+    const aggDI15 = aggVision.find(row => row.id === 'DI-1-5');
+    const aggDI13 = aggVision.find(row => row.id === 'DI-1-3');
+
+    expect(aggDI15.M52Rows.first()).toBe(m52Rows[0]);
+    expect(aggDI13.M52Rows.size).toBe(0);
+});
+
