@@ -158,8 +158,7 @@ export const rules = Object.freeze({
 
             return isRF(m52Row) && (
                 // mise à jour 2019 CA 2018 74788 * F538
-                (['74788'].includes(m52Row['Nature']) && fonction === '538')
-            )
+                ['74788'].includes(m52Row['Nature']) && fonction === '538')
         }
 
     },
@@ -241,8 +240,7 @@ export const rules = Object.freeze({
                 // suppression mise à jour CA 2018 f1 !== '4' && f1 !== '5' && 
                 [
                     '7475', '7476', '74771', '74772', '74778',
-                    // mise à jour CA 2018 '74788',
-                    '74888', '74718', '7474', '7472',
+                    '74788', '74888', '74718', '7474', '7472',
                     '7473', '7478228'
                 ].includes(m52Row['Nature']);
         }
@@ -282,9 +280,9 @@ export const rules = Object.freeze({
                 f1 !== '4' && f1 !== '5' &&
                 article.startsWith('75') &&
                 article !== '752' &&
-                article !== '7513' &&
-                article !== '75342' &&
-                article !== '75343' &&
+                //article !== '7513' &&
+                //article !== '75342' &&
+                //article !== '75343' &&
                 // article exclus pour le CA 2017
                 article !== '7511' &&
                 article !== '7535' &&
@@ -489,9 +487,9 @@ export const rules = Object.freeze({
             return isDF(m52Row) && (f2 === '55' || f2 === '53') &&
                 article !== '6513' &&
                 !article.startsWith('64') &&
-                article !== '6336'
-            // mise à jour CA 2018
-            // && (article == '6245' && fonction === '538');
+                article !== '6336' &&
+                // mise à jour CA 2018
+                (article == '6245' && fonction === '538');
         }
     },
     'DF-2-4': {
@@ -725,7 +723,6 @@ export const rules = Object.freeze({
                 !(['4', '5', '8'].includes(f1)) &&
                 !(f3 === '621') &&
                 art !== '6218' &&
-                //mise à jour CA 2018
                 (art === '6251' && f3 === '621');
         }
     },
@@ -754,7 +751,6 @@ export const rules = Object.freeze({
                 (art.startsWith('60') || art.startsWith('61') || art.startsWith('62') || art.startsWith('63')) &&
                 art !== '6336' &&
                 art !== '6215' &&
-                //mise à jour CA 2018
                 !(art === '6251' && f3 === '621');
         }
     },
@@ -942,7 +938,7 @@ export const rules = Object.freeze({
                         )
                     ) ||
                     (fonction === '18' && article === '23153') ||
-                    (fonction === '52' && ['23151', '2315', '2118', '23152'].includes(article)) ||
+                    (fonction === '52' && ['23151', '2315', '2118' + '23152'].includes(article)) ||
                     (fonction === '821' && article === '1322') ||
                     // mise à jour CA 2018 
                     (fonction === '33' && article === '23153')
@@ -978,9 +974,7 @@ export const rules = Object.freeze({
                     (fonction === '52' && article === '2315') ||
                     (fonction === '50' && article === '231351') ||
                     (fonction === '01' && article === '2761') ||
-                    (fonction === '01' && article === '2748') ||
-                    // mise à jour CA 2018
-                    (fonction === '91' && article === '2764')
+                    (fonction === '01' && article === '2748')
                 ) &&
                 !(article === '21313' && fonction === '40') &&
                 !(article === '1322' && fonction === '821') &&
@@ -993,6 +987,8 @@ export const rules = Object.freeze({
                     ) &&
                     fonction === '21'
                 ) &&
+                // mise à jour CA 2018
+                (article === '2764' && fonction === '91') &&
                 !(article === '23153' && fonction === '18') &&
                 !article.startsWith('204');
         }
